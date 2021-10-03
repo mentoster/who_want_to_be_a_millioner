@@ -51,6 +51,7 @@ class SetNamePage extends GetView<SetnameController> {
                                         "Слишком длинное имя";
                                     return "Слишком длинное имя";
                                   } else {
+                                    controller.nickname = value;
                                     controller.isValid = true;
                                     return null;
                                   }

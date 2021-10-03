@@ -24,14 +24,14 @@ class TestPage extends GetView<TestController> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "Осталось времени:\n ",
-                        style: testStyle,
-                      ),
-                      Text(
-                        "Вопрос:\n 1 из 10",
-                        style: testStyle,
-                      )
+                      Obx(() => Text(
+                            "Осталось времени:\n ${controller.timeNow}",
+                            style: testStyle,
+                          )),
+                      Obx(() => Text(
+                            "Вопрос:\n ${controller.questionNow} из ${controller.test.length}",
+                            style: testStyle,
+                          ))
                     ],
                   ),
                 ),
@@ -47,10 +47,10 @@ class TestPage extends GetView<TestController> {
                         child: Center(
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "ВопрfffffffffffffffffffffffffffffffffffffffffосВопрfffffffffffffffffffffffffffffffffffffffffосВопрfffffffffffffffffffffffffffffffffffffffffосВопрfffffffffffffffffffffffffffffffffffffffffосВопрfffffffffffffffffffffffffffffffffffffffffос",
-                              style: testStyle,
-                            ),
+                            child: Obx(() => Text(
+                                  controller.question.value,
+                                  style: testStyle,
+                                )),
                           ),
                         ),
                       ),
@@ -81,32 +81,44 @@ class TestPage extends GetView<TestController> {
   }
 
   Widget answer(int number, Size size) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        width: size.width / 2.3,
-        height: size.height / 5,
-        decoration: BoxDecoration(
-            color: Colors.blue[800],
-            borderRadius: const BorderRadius.all(Radius.circular(20))),
-        child: Center(
-          child: Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 8),
-                child: Text(
-                  "$number. ",
-                  style: testStyle,
+    return Flexible(
+      child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Obx(
+            () => InkWell(
+              onTap: () =>
+                  controller.checkAnswer(controller.answers[number - 1]),
+              child: Container(
+                width: size.width / 2.3,
+                decoration: BoxDecoration(
+                    color: Colors.blue[800],
+                    borderRadius: const BorderRadius.all(Radius.circular(20))),
+                child: Center(
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8),
+                        child: Text(
+                          "$number. ",
+                          style: testStyle,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            controller.answers[number - 1],
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              Text(
-                "Ответ",
-                style: testStyle,
-              ),
-            ],
-          ),
-        ),
-      ),
+            ),
+          )),
     );
   }
 }
