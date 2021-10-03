@@ -12,14 +12,8 @@ class HomePage extends GetView<HomeController> {
       body: SingleChildScrollView(
         child: SafeArea(
             child: Stack(children: [
-          Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/images/millionery.jpg"),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
+          Image.asset("assets/images/cover.jpg",
+              fit: BoxFit.cover, height: size.height, width: size.width),
           Column(
             children: [
               Padding(
@@ -64,7 +58,8 @@ class HomePage extends GetView<HomeController> {
                                     style: TextStyle(color: Colors.white)),
                               ],
                             ),
-                          )
+                          ),
+                          const Divider(),
                         ],
                       ),
                     ),
@@ -85,7 +80,7 @@ class HomePage extends GetView<HomeController> {
                           RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18.0),
                   ))),
-                  onPressed: () => this.controller.start(),
+                  onPressed: () => controller.start(),
                   child: Text(
                     'Начать игру  ',
                     style: TextStyle(
