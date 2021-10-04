@@ -57,12 +57,6 @@ class TestController extends GetxController {
         answer3: "Python",
         rightAnswer: "Все хороши"),
     TestModel(
-        question: "Какой язык программирования Дима обожает?",
-        answer1: "Dart",
-        answer2: "C#",
-        answer3: "Python",
-        rightAnswer: "Все хороши"),
-    TestModel(
         question: "Тест на удачу",
         answer1: "15156",
         answer2: "4145",
@@ -137,7 +131,6 @@ class TestController extends GetxController {
   void checkAnswer(String answer) {
     if (answer == test[questionNow.value].rightAnswer) {
       right();
-      rp.addRating(name, scores.value);
     } else {
       wrong();
     }
@@ -147,20 +140,19 @@ class TestController extends GetxController {
     showLoseScreen.value = true;
     await Future.delayed(const Duration(seconds: 6), () {});
     showLoseScreen.value = false;
-    Get.toNamed("${Routes.LOSE}/?scores=${scores.value}");
+    alreadyStarted = false;
+    Get.offAllNamed("${Routes.LOSE}/?scores=${scores.value}");
   }
 
   void right() async {
     scores += timeNow.value;
+    rp.addRating(name, scores.value);
     timeNow.value = maxTime;
     questionNow.value++;
     if (questionNow.value == test.length) {
-      Get.toNamed("${Routes.WIN}/?scores=${scores.value}");
+      Get.offAllNamed("${Routes.WIN}/?scores=${scores.value}");
     } else {
       nextQuestion();
     }
   }
-
-  void goToResultPage() {}
-  void writeRecord() {}
 }
