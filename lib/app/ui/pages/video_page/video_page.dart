@@ -1,10 +1,11 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPage extends StatefulWidget {
+  const VideoPage({Key? key}) : super(key: key);
+
   @override
   _VideoPageState createState() => _VideoPageState();
 }

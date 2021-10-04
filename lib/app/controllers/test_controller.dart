@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:who_want_to_be_a_millioner/app/data/models/test_model.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:who_want_to_be_a_millioner/app/data/repository/rating_repository.dart';
 import 'package:who_want_to_be_a_millioner/app/routes/app_pages.dart';
 
 class TestController extends GetxController {
@@ -80,6 +81,7 @@ class TestController extends GetxController {
         answer3: "Аниме Твое Имя",
         rightAnswer: "Форрест Гамп")
   ];
+  RatingRepository rp = RatingRepository();
   late String name;
   var question = "".obs;
   var answers = ["", "", "", ""].obs;
@@ -87,6 +89,7 @@ class TestController extends GetxController {
   final maxTime = 30;
   var scores = 0.obs;
   var questionNow = 0.obs;
+  var showLoseScreen = false.obs;
   bool alreadyStarted = false;
   final AudioPlayer audioPlayer = AudioPlayer(
     mode: PlayerMode.LOW_LATENCY,
@@ -134,13 +137,17 @@ class TestController extends GetxController {
   void checkAnswer(String answer) {
     if (answer == test[questionNow.value].rightAnswer) {
       right();
+      rp.addRating(name, scores.value);
     } else {
       wrong();
     }
   }
 
   void wrong() async {
-    Get.toNamed("${Routes.LOSE}");
+    showLoseScreen.value = true;
+    await Future.delayed(const Duration(seconds: 6), () {});
+    showLoseScreen.value = false;
+    Get.toNamed("${Routes.LOSE}/?scores=${scores.value}");
   }
 
   void right() async {
@@ -148,7 +155,7 @@ class TestController extends GetxController {
     timeNow.value = maxTime;
     questionNow.value++;
     if (questionNow.value == test.length) {
-      questionNow.value--;
+      Get.toNamed("${Routes.WIN}/?scores=${scores.value}");
     } else {
       nextQuestion();
     }

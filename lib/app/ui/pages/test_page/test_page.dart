@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:who_want_to_be_a_millioner/app/ui/pages/video_page/video_page.dart';
 import '../../../controllers/test_controller.dart';
 
 class TestPage extends GetView<TestController> {
@@ -73,7 +74,9 @@ class TestPage extends GetView<TestController> {
                   ],
                 ),
               ],
-            )
+            ),
+            Obx(() =>
+                controller.showLoseScreen.value ? const VideoPage() : Container()),
           ],
         ),
       ),
@@ -109,7 +112,7 @@ class TestPage extends GetView<TestController> {
                           fit: BoxFit.scaleDown,
                           child: Text(
                             controller.answers[number - 1],
-                            style: TextStyle(color: Colors.white),
+                            style: const TextStyle(color: Colors.white),
                           ),
                         ),
                       ),

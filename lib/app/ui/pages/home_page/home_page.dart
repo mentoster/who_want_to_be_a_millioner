@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:who_want_to_be_a_millioner/app/data/models/leaderborad.dart';
 import '../../../controllers/home_controller.dart';
 
 class HomePage extends GetView<HomeController> {
@@ -7,9 +8,11 @@ class HomePage extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
+    controller.init();
     var size = MediaQuery.of(context).size;
     return Scaffold(
       body: SingleChildScrollView(
+        physics: const ScrollPhysics(),
         child: SafeArea(
             child: Stack(children: [
           Image.asset("assets/images/cover.jpg",
@@ -34,7 +37,10 @@ class HomePage extends GetView<HomeController> {
                   Expanded(
                     flex: 6,
                     child: Container(
-                      color: Colors.blue[700],
+                      decoration: BoxDecoration(
+                          color: Colors.blue[700],
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(20))),
                       child: Column(
                         children: [
                           Padding(
@@ -60,6 +66,38 @@ class HomePage extends GetView<HomeController> {
                             ),
                           ),
                           const Divider(),
+                          FutureBuilder<Rating>(
+                            future: controller.getScores(),
+                            builder: (BuildContext context,
+                                AsyncSnapshot<Rating> snapshot) {
+                              if (snapshot.hasData) {
+                                return ListView.builder(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: snapshot.data!.rp.length,
+                                  itemBuilder: (BuildContext context, int i) {
+                                    return Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(snapshot.data!.rp[i].name,
+                                              style: const TextStyle(
+                                                  color: Colors.white)),
+                                          Text(snapshot.data!.rp[i].scores,
+                                              style: const TextStyle(
+                                                  color: Colors.white)),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                );
+                              } else {
+                                return Container();
+                              }
+                            },
+                          ),
                         ],
                       ),
                     ),
