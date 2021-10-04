@@ -7,23 +7,29 @@ class WinController extends GetxController {
   void init() {
     if (Get.parameters['scores'] != null) {
       scores.value = int.parse(Get.parameters['scores']!);
-      if (scores > 330) {
-        rang = "Читер";
-      } else if (scores > 300) {
-        rang = "Лучший друг";
-      } else if (scores > 270) {
-        rang = "Друг";
-      } else if (scores > 270) {
-        rang = "Товарищ";
-      } else if (scores > 240) {
-        rang = "Знакомый";
-      } else if (scores > 210) {
-        rang = "Просто слышал о Дима";
-      } else if (scores > 180) {
-        rang = "Никто";
-      }
+      rang = returnRatingName(scores.value);
     } else {
       Get.offAndToNamed(Routes.HOME);
+    }
+  }
+
+  String returnRatingName(int sc) {
+    if (sc > 330) {
+      return "Читер";
+    } else if (sc > 300) {
+      return "Лучший друг";
+    } else if (sc > 270) {
+      return "Друг";
+    } else if (sc > 270) {
+      return "Товарищ";
+    } else if (scores > 240) {
+      return "Знакомый";
+    } else if (scores > 210) {
+      return "Просто слышал о Дима";
+    } else if (sc > 180) {
+      return "Никто";
+    } else {
+      return "Совсем никто";
     }
   }
 

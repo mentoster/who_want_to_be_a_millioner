@@ -1,4 +1,3 @@
-
 import 'package:who_want_to_be_a_millioner/app/data/models/leaderborad.dart';
 import 'package:who_want_to_be_a_millioner/app/data/models/user_rating_api/user_rating.dart';
 import 'package:who_want_to_be_a_millioner/app/data/provider/rating_api.dart';
@@ -11,7 +10,11 @@ class RatingRepository {
   }
 
   Future<Rating> getScores() async {
-    var a = UserRating.fromJson(await api.getScores());
+    return parseResult(await api.getScores());
+  }
+
+  Rating parseResult(json) {
+    var a = UserRating.fromJson(json);
     List<RatingPlace> rp = [];
     for (var place in a.dreamlo!.leaderboard!.entry!) {
       rp.add(RatingPlace(name: place.name!, scores: place.score!));
