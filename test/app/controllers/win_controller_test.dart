@@ -16,7 +16,7 @@ void main() {
       // arrange
       final wc = WinController();
       // act
-      var result = await wc.returnRatingName(300);
+      var result =  wc.returnRatingName(300);
       // assert
       expect(result, "Друг");
     },
@@ -27,7 +27,7 @@ void main() {
       // arrange
       final wc = WinController();
       // act
-      var result = await wc.returnRatingName(-100);
+      var result =  wc.returnRatingName(-100);
       // assert
       expect(result, "Совсем никто");
     },
@@ -38,7 +38,7 @@ void main() {
       // arrange
       final wc = WinController();
       // act
-      var result = await wc.returnRatingName(310);
+      var result =  wc.returnRatingName(310);
       // assert
       expect(result, "Лучший друг");
     },
@@ -49,7 +49,7 @@ void main() {
       // arrange
       final wc = WinController();
       // act
-      var result = await wc.returnRatingName(5000000);
+      var result =  wc.returnRatingName(5000000);
       // assert
       expect(result, "Читер");
     },

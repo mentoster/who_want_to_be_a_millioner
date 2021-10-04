@@ -26,8 +26,8 @@ abstract class AppPages {
         name: Routes.TEST,
         page: () => const TestPage(),
         binding: TestBinding()),
-    GetPage(name: Routes.VIDEO, page: () => VideoPage()),
-    GetPage(name: Routes.WIN, page: () => WinPage(), binding: WinBinding()),
-    GetPage(name: Routes.LOSE, page: () => LosePage(), binding: LoseBinding()),
+    GetPage(name: Routes.VIDEO, page: () => const VideoPage()),
+    GetPage(name: Routes.WIN, page: () => const WinPage(), binding: WinBinding()),
+    GetPage(name: Routes.LOSE, page: () => const LosePage(), binding: LoseBinding()),
   ];
 }
