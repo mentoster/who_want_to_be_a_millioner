@@ -7,7 +7,7 @@ class HomeController extends GetxController {
   RatingRepository rp = RatingRepository();
   void init() {}
 
-  /// Возвращяет количество очков из апи.
+  /// Возвращает количество очков из апи.
   Future<Rating> getScores() async {
     return await rp.getScores();
   }
