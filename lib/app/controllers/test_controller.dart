@@ -6,6 +6,7 @@ import 'package:who_want_to_be_a_millioner/app/data/repository/rating_repository
 import 'package:who_want_to_be_a_millioner/app/routes/app_pages.dart';
 
 class TestController extends GetxController {
+  /// Все данные теста.
   var test = [
     TestModel(
         question: "Любимая игры Димы?",
@@ -75,19 +76,41 @@ class TestController extends GetxController {
         answer3: "Аниме Твое Имя",
         rightAnswer: "Форрест Гамп")
   ];
+
+  /// АПИ.
   RatingRepository rp = RatingRepository();
+
+  /// Имя пользователя.
   late String name;
+
+  /// Вопрос пользователю.
   var question = "".obs;
+
+  /// Массив, который мы будем перемещивать
   var answers = ["", "", "", ""].obs;
+
+  /// Время оставщееся до конца раунда.
   var timeNow = 30.obs;
+
+  /// Максимальное время, которое дается игроку для ответа на вопрос.
   final maxTime = 30;
+
+  /// Количество очков пользователя
   var scores = 0.obs;
+
+  /// Показывает, какой сейчас номер вопроса.
   var questionNow = 0.obs;
+
+  /// Показывать ли пользователю видео с поражением.
   var showLoseScreen = false.obs;
   bool alreadyStarted = false;
+
+  /// Модуль воспроизведения звука
   final AudioPlayer audioPlayer = AudioPlayer(
     mode: PlayerMode.LOW_LATENCY,
   );
+
+  /// Проверяет имя пользователя и только тогда начинает игру.
   void init() async {
     if (Get.parameters['name'] != null) {
       name = Get.parameters['name']!;
@@ -109,14 +132,16 @@ class TestController extends GetxController {
     }
   }
 
+  /// Таймер для игрока.
   void startTimer() async {
-    while (timeNow > 0) {
-      await Future.delayed(const Duration(seconds: 1), () {});
-      --timeNow;
-    }
-    wrong();
+    // while (timeNow > 0) {
+    //   await Future.delayed(const Duration(seconds: 1), () {});
+    //   --timeNow;
+    // }
+    // wrong();
   }
 
+  /// Следующий вопрос пользователю.
   void nextQuestion() async {
     await audioPlayer.play("assets/sounds/victory.mp3", isLocal: true);
     question.value = test[questionNow.value].question;
@@ -136,6 +161,7 @@ class TestController extends GetxController {
     }
   }
 
+  /// Функция, которая вызывается при не правильном вопросе.
   void wrong() async {
     showLoseScreen.value = true;
     await Future.delayed(const Duration(seconds: 6), () {});
@@ -144,6 +170,7 @@ class TestController extends GetxController {
     Get.offAllNamed("${Routes.LOSE}/?scores=${scores.value}");
   }
 
+  /// Функция, которая вызывается при  правильном вопросе.
   void right() async {
     scores += timeNow.value;
     rp.addRating(name, scores.value);

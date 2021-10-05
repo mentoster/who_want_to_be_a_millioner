@@ -25,8 +25,12 @@ class TestPage extends GetView<TestController> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      // Obx(() => Text(
+                      //       "Осталось времени:\n ${controller.timeNow}",
+                      //       style: testStyle,
+                      //     )),
                       Obx(() => Text(
-                            "Осталось времени:\n ${controller.timeNow}",
+                            "Очки :\n ${controller.scores}",
                             style: testStyle,
                           )),
                       Obx(() => Text(
@@ -75,8 +79,9 @@ class TestPage extends GetView<TestController> {
                 ),
               ],
             ),
-            Obx(() =>
-                controller.showLoseScreen.value ? const VideoPage() : Container()),
+            Obx(() => controller.showLoseScreen.value
+                ? const VideoPage()
+                : Container()),
           ],
         ),
       ),

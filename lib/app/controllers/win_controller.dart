@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:who_want_to_be_a_millioner/app/routes/app_pages.dart';
 
 class WinController extends GetxController {
+  /// Очки пользователя
   var scores = 0.obs;
   var rang = "Вы никто для димы";
   void init() {
@@ -13,6 +14,7 @@ class WinController extends GetxController {
     }
   }
 
+  /// Функция, которая показывает рейтинг игрока.
   String returnRatingName(int sc) {
     if (sc > 330) {
       return "Читер";
@@ -33,6 +35,7 @@ class WinController extends GetxController {
     }
   }
 
+  /// Функция возвращяет игрока домой.
   void back() {
     Get.offAndToNamed(Routes.HOME);
   }
