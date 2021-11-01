@@ -1,6 +1,6 @@
 # who_want_to_be_a_millioner
 
-A new Flutter project.
+Flutter project.
 
 ## Getting Started
 
