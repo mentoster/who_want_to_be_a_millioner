@@ -1,6 +1,8 @@
 name: DartAnalyze
 
-on: pull_request
+on:
+   push:
+     branches: [master]
 
 jobs:
   linter:
